@@ -9,12 +9,12 @@
 (projectile-add-known-project "~/Desktop/programming/c++/chip8")
 (projectile-add-known-project "~/Desktop/programming/c++/misc")
 
-;; Doom Related
+;; Doom Settings
 (setq user-full-name "hab5")
 
 (setq doom-theme 'doom-one)
-;; (custom-theme-set-faces! 'doom-one
-;;   '(default :background "#1e222a"))
+(custom-theme-set-faces! 'doom-one
+  '(default :background "#21242B"))
 
 
 (setq doom-font                 (font-spec :family "JetBrains Mono Nerd Font" :size 14)
@@ -32,41 +32,46 @@
       auto-save-default           t                ; Auto-save files
       display-line-numbers-type   'relative        ; Line number display style
       which-key-idle-delay        0.4              ; Which-key popup delay
-      all-the-icons-scale-factor  1.1              ; Fix clipping on modeline (default 1.2)
+      all-the-icons-scale-factor  1.1              ; Fix clipping on modeline
       +ivy-buffer-preview         t)               ; Buffer preview
 
-(setq doom-fallback-buffer-name "Doom"             ; Rename Dashboard buffer name
+(setq doom-fallback-buffer-name "Doom"             ; Rename Doom-Dashboard buffer
       +doom-dashboard-name "Doom")
 
 (global-subword-mode 1) ; Iterate through CamelCase words
 
-;; LSP Mode
-(setq lsp-idle-delay              0.5  ; Delay highlights/lenses/link/etc
-      company-idle-delay          0.1  ; Delay completion pop-up
-      lsp-enable-indentation      nil  ; Let cc-mode deal with that
-      lsp-ui-doc-show-with-cursor nil  ; Disable automatic pop-up documentation
-      lsp-signature-auto-activate nil  ; Disable automatic pop-up signature
-      lsp-log-io                  nil) ; For debugging?
+;; LSP Mode Settings
+(setq lsp-idle-delay                   0.5    ; Delay highlights/lenses/link/etc
+      company-idle-delay               0.0    ; Delay completion pop-up
+      lsp-enable-indentation           nil    ; Let cc-mode deal with that
+      lsp-ui-doc-show-with-cursor      nil    ; Disable automatic pop-up documentation
+      lsp-signature-auto-activate      nil    ; Disable automatic pop-up signature
+      lsp-completion-provider          :capf  ; Fix for company backend conflict
+      lsp-semantic-tokens-enable       nil    ; Let cc-mode deal with syntax highlighting
+      lsp-log-io                       nil)   ; Enable when debugging LSP, log messages
+
+(after! lsp-mode ; Another fix for buggy completion sorting
+    (setq +lsp-company-backends
+          '(:separate company-capf company-yasnippet)))
 
 (setq read-process-output-max     (* 1024 1024)) ; How much Emacs can read from the process
-                                        ;
 
-;; C/C++ Related
+;; C/C++ Settings
 (defun c++-configuration()
   (c-set-style "stroustrup")
   (setq c-basic-offset 4))
 (add-hook! 'c++-mode-hook 'c++-configuration)
 
-;; Org Related
+;; Org Settings
 (setq org-directory "~/org/") ; Org Path
 (defun no-line-number()
   (display-line-numbers-mode 0))
 (add-hook! 'org-mode-hook 'no-line-number) ; Disable line numbers for org mode
 
-;; Evil Related
+;; Evil Settings
 (evil-ex-define-cmd "W" #'save-buffer) ; fatfinger acceptance
 
-;; Leetcode
+;; Leetcode Settings
 (setq leetcode-set-prefer-language "cpp")
 (setq leetcode-save-solutions t)
 (setq leetcode-directory "~/Desktop/programming/c++/leetcode")
