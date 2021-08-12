@@ -61,6 +61,7 @@
   (c-set-style "stroustrup")
   (setq c-basic-offset 4))
 (add-hook! 'c++-mode-hook 'c++-configuration)
+(require 'dap-gdb-lldb) ; Debugger
 
 ;; Org Settings
 (setq org-directory "~/org/") ; Org Path
@@ -97,8 +98,6 @@
       "C-<right>"  #'+evil/window-move-right)
 
 ;; Package Configuration
-(require 'dap-gdb-lldb) ; Debugger
-
 
 (use-package shrface ; Extends shr/eww with org features
   :defer t
@@ -126,8 +125,8 @@
 (after! which-key
   (pushnew!
    which-key-replacement-alist ; Modify which-key suggestions name
-   '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1")) ; Replace "evil-" prefix with : ◂
-   '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1")) ; Replace "evil-motion" prefix with : ◃
+   '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "\\1")) ; Delete "evil-" prefix.
+   '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "\\1")) ; Delete "evil-motion".
    ))
 
 
